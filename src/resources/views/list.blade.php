@@ -1,7 +1,7 @@
 @extends('web::layouts.grids.12')
 
 @section('title', 'DKP')
-@section('page_header', trans('dkp::dkp.list'))
+@section('page_header', '我的DKP')
 
 @push('head')
     <link rel="stylesheet"
@@ -12,6 +12,26 @@
 @endpush
 
 @section('full')
+    <div class="card card-primary card-solid">
+        <div class="card-body">
+            <div class="progress" style="width: 30%;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30"
+                     aria-valuemin="0"
+                     aria-valuemax="100">可兑换:30
+                </div>
+                <div class="progress-bar bg-danger" role="progressbar" style="width: 55%" aria-valuenow="55"
+                     aria-valuemin="0"
+                     aria-valuemax="100">锁定:55
+                </div>
+                <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                     style="color:gray; width: 15%" aria-valuenow="15" aria-valuemin="0"
+                     aria-valuemax="100">已兑换:15
+                </div>
+            </div>
+            累计获取:100
+        </div>
+    </div>
+    <br>
     <div class="card card-primary card-solid">
         <div class="card-body">
             <div class="nav-tabs-custom">
