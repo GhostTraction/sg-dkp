@@ -2,12 +2,16 @@
 
 namespace Dkp\Seat\SeatDKP\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Seat\Services\Traits\NotableTrait;
 
 
 class DkpInfo extends Model
 {
+    use NotableTrait;
+    use Notifiable;
+
     public $timestamps = true;
 
     protected $primaryKey = 'id';

@@ -53,7 +53,7 @@ class DKPServiceProvider extends AbstractSeatPlugin
      */
     public function add_views()
     {
-        $this->loadViewsFrom(__DIR__ . '/resources/views', 'srp');
+        $this->loadViewsFrom(__DIR__ . '/resources/views', 'dkp');
     }
 
     /**

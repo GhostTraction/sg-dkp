@@ -42,10 +42,10 @@
                                         <td>
                                             {{$dkp->score}}
                                         </td>
-                                        <td data-order="{{ strtotime($kill->created_at) }}>
+                                        <td data-order="{{ strtotime($dkp->created_at) }}>
                       <span data-toggle=" tooltip
-                                        " data-placement="top" title="{{ $kill->created_at }}
-                                        ">{{ human_diff($kill->created_at) }}</span>
+                                        " data-placement="top" title="{{ $dkp->created_at }}
+                                        ">{{ human_diff($dkp->created_at) }}</span>
                                         </td>
                                         <td>
                                             {{$dkp->remark}}
@@ -77,10 +77,10 @@
                                         <td>
                                             {{$dkp->score}}
                                         </td>
-                                        <td data-order="{{ strtotime($kill->created_at) }}>
+                                        <td data-order="{{ strtotime($dkp->created_at) }}>
                       <span data-toggle=" tooltip
-                                        " data-placement="top" title="{{ $kill->created_at }}
-                                        ">{{ human_diff($kill->created_at) }}</span>
+                                        " data-placement="top" title="{{ $dkp->created_at }}
+                                        ">{{ human_diff($dkp->created_at) }}</span>
                                         </td>
                                         <td>
                                             {{$dkp->remark}}

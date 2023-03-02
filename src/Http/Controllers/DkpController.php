@@ -1,8 +1,8 @@
 <?php
 
-namespace Dkp\Seat\SeatDKP\HttpControllers;
+namespace Dkp\Seat\SeatDKP\Http\Controllers;
 
-use Seat\SeatDKP\Models\DkpInfo;
+use Dkp\Seat\SeatDKP\Models\DkpInfo;
 use Seat\Web\Http\Controllers\Controller;
 
 class DkpController extends Controller
@@ -10,7 +10,7 @@ class DkpController extends Controller
     public function getMineDkp()
     {
         $dkpList = DkpInfo::where(function ($query) {
-            $query->where('id', '=', auth()->user()->id);
+            $query->where('user_id', '=', auth()->user()->id);
         })->get();
         return view('dkp::list')->with('dkpList', $dkpList);
 

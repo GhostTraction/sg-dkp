@@ -11,7 +11,7 @@ Route::group([
     ], function () {
 
         Route::get('/', [
-            'as' => 'dkp.request',
+            'as' => 'dkp.minelist',
             'uses' => 'DkpController@getMineDkp',
             'middleware' => 'can:dkp.request',
         ]);
