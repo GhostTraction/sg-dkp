@@ -9,9 +9,9 @@ class DkpController extends Controller
 {
     public function getMineDkp()
     {
-        $dkpList = DkpInfo::where(function ($query) {
-            $query->where('user_id', '=', auth()->user()->id);
-        })->get();
+        $dkpList = DkpInfo::innerjoin('character_info', 'character_info.character_id', '=', 'dkp_info.character_id')
+            ->where('dkp_info.user_id', '=', auth()->user()->id)
+            ->get();
         return view('dkp::list')->with('dkpList', $dkpList);
 
     }

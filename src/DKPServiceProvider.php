@@ -2,8 +2,6 @@
 
 namespace Dkp\Seat\SeatDKP;
 
-//use Seat\SeatDKP\Commands\FlagShim;
-//use Seat\SeatDKP\Commands\InsuranceUpdate;
 use Seat\Services\AbstractSeatPlugin;
 
 class DKPServiceProvider extends AbstractSeatPlugin
@@ -15,23 +13,14 @@ class DKPServiceProvider extends AbstractSeatPlugin
      */
     public function boot()
     {
-//        $this->addCommands();
+
         $this->add_routes();
-        // $this->add_middleware($router);
         $this->add_views();
         $this->add_publications();
         $this->add_migrations();
-//        $this->add_translations();
         $this->apply_custom_configuration();
     }
 
-    private function addCommands()
-    {
-        $this->commands([
-//            InsuranceUpdate::class,
-//            FlagShim::class,
-        ]);
-    }
 
     /**
      * Include the routes.
@@ -41,11 +30,6 @@ class DKPServiceProvider extends AbstractSeatPlugin
         if (!$this->app->routesAreCached()) {
             include __DIR__ . '/Http/routes.php';
         }
-    }
-
-    public function add_translations()
-    {
-        $this->loadTranslationsFrom(__DIR__ . '/lang', 'srp');
     }
 
     /**
