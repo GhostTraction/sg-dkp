@@ -4,9 +4,9 @@ namespace Dkp\Seat\SeatDKP;
 
 //use Seat\SeatDKP\Commands\FlagShim;
 //use Seat\SeatDKP\Commands\InsuranceUpdate;
-use Illuminate\Support\ServiceProvider;
+use Seat\Services\AbstractSeatPlugin;
 
-class DKPServiceProvider extends ServiceProvider
+class DKPServiceProvider extends AbstractSeatPlugin
 {
     /**
      * Bootstrap the application services.
@@ -108,51 +108,51 @@ class DKPServiceProvider extends ServiceProvider
         ]);
     }
 
-//    /**
-//     * Return the plugin public name as it should be displayed into settings.
-//     *
-//     * @return string
-//     * @example SeAT Web
-//     *
-//     */
-//    public function getName(): string
-//    {
-//        return 'DKP';
-//    }
-//
-//    /**
-//     * Return the plugin repository address.
-//     *
-//     * @example https://github.com/eveseat/web
-//     *
-//     * @return string
-//     */
-//    public function getPackageRepositoryUrl(): string
-//    {
-//        return '';
-//    }
-//
-//    /**
-//     * Return the plugin technical name as published on package manager.
-//     *
-//     * @return string
-//     * @example web
-//     *
-//     */
-//    public function getPackagistPackageName(): string
-//    {
-//        return 'sg-dkp';
-//    }
-//
-//    /**
-//     * Return the plugin vendor tag as published on package manager.
-//     *
-//     * @return string
-//     * @example eveseat
-//     *
-//     */
-//    public function getPackagistVendorName(): string
-//    {
-//        return 'dkp';
-//    }
+    /**
+     * Return the plugin public name as it should be displayed into settings.
+     *
+     * @return string
+     * @example SeAT Web
+     *
+     */
+    public function getName(): string
+    {
+        return 'DKP';
+    }
+
+    /**
+     * Return the plugin repository address.
+     *
+     * @example https://github.com/eveseat/web
+     *
+     * @return string
+     */
+    public function getPackageRepositoryUrl(): string
+    {
+        return 'https://github.com/GhostTraction/sg-dkp.git';
+    }
+
+    /**
+     * Return the plugin technical name as published on package manager.
+     *
+     * @return string
+     * @example web
+     *
+     */
+    public function getPackagistPackageName(): string
+    {
+        return 'sg-dkp';
+    }
+
+    /**
+     * Return the plugin vendor tag as published on package manager.
+     *
+     * @return string
+     * @example eveseat
+     *
+     */
+    public function getPackagistVendorName(): string
+    {
+        return 'dkp';
+    }
 }
