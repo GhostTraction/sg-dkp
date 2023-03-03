@@ -15,20 +15,23 @@
     <div class="card card-primary card-solid">
         <div class="card-body">
             <div class="progress" style="width: 30%;">
-                <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30"
+                <div class="progress-bar bg-success" role="progressbar"
+                     style="width: {{($sumDkp-$lockDkp-$isUseDkp)/$sumDkp*100}}%"
+                     aria-valuenow="{{$sumDkp-$lockDkp-$isUseDkp}}"
                      aria-valuemin="0"
-                     aria-valuemax="100">可兑换:30
+                     aria-valuemax="100">可兑换:{{$sumDkp-$lockDkp-$isUseDkp}}
                 </div>
-                <div class="progress-bar bg-danger" role="progressbar" style="width: 55%" aria-valuenow="55"
+                <div class="progress-bar bg-danger" role="progressbar" style="width: {{$lockDkp/$sumDkp*100}}%"
+                     aria-valuenow="{{$lockDkp}}"
                      aria-valuemin="0"
-                     aria-valuemax="100">锁定:55
+                     aria-valuemax="100">锁定:{{$lockDkp}}
                 </div>
                 <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
-                     style="color:gray; width: 15%" aria-valuenow="15" aria-valuemin="0"
-                     aria-valuemax="100">已兑换:15
+                     style="width: {{$isUseDkp/$sumDkp*100}}%" aria-valuenow="{{$isUseDkp}}" aria-valuemin="0"
+                     aria-valuemax="100">已兑换:{{$isUseDkp}}
                 </div>
             </div>
-            累计获取:100
+            累计获取:{{$sumDkp}}
         </div>
     </div>
     <br>
@@ -85,7 +88,7 @@
                             </thead>
                             <tbody>
                             @foreach ($dkpList as $dkp)
-                                @if(($dkp->status == 2))
+                                @if(($dkp->status == 2)||($dkp->status == 3))
                                     <tr>
                                         <td>
                                             {{$dkp->character_id}}
