@@ -24,12 +24,12 @@ return [
 //                'route' => 'dkp.commodity',
 //                'permission' => 'srp.request',
 //            ],
-//            [
-//                'name' => 'DKP兑换流水',
-//                'icon' => 'fas fa-chart-bar',
-//                'route' => 'dkp.commodityInfo',
-//                'permission' => 'dkp.admin',
-//            ],
+            [
+                'name' => '成员DKP统计',
+                'icon' => 'fas fa-chart-bar',
+                'route' => 'dkp.commodityInfo',
+                'permission' => 'dkp.admin',
+            ],
 //            [
 //                'name' => 'DKP兑换审批',
 //                'icon' => 'fas fa-chart-bar',
