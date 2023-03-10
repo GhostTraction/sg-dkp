@@ -74,7 +74,7 @@
                                         <td>
                                             {{$dkp->score}}
                                         </td>
-                                        <td>{{$dkp->create_time}}</td>
+                                        <td>{{$dkp->created_at}}</td>
                                         <td>
                                             {{$dkp->remark}}
                                         </td>
@@ -98,7 +98,7 @@
                             </thead>
                             <tbody>
                             @foreach ($dkpList as $dkp)
-                                @if(($dkp->status == 2)||($dkp->status == 3))
+                                @if(($dkp->status == 2)||($dkp->status == 3)||($dkp->status == 0))
                                     <tr>
                                         <td>
                                             {{$dkp->name}}
@@ -106,7 +106,7 @@
                                         <td>
                                             {{$dkp->score}}
                                         </td>
-                                        <td>{{$dkp->create_time}}</td>
+                                        <td>{{$dkp->created_at}}</td>
                                         <td>
                                             {{$dkp->remark}}
                                         </td>

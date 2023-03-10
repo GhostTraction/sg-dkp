@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Seat\Services\Traits\NotableTrait;
 
 
-class DkpInfo extends Model
+class DkpConfig extends Model
 {
     use NotableTrait;
     use Notifiable;
@@ -16,8 +16,8 @@ class DkpInfo extends Model
 
     protected $primaryKey = 'id';
 
-    protected $table = 'dkp_info';
+    protected $table = 'dkp_config';
 
-    protected $fillable = ['id', 'user_id', 'character_id', 'score', 'status', 'remark', 'approved', 'supplement_id', 'approver',];
+    protected $fillable = ['id', 'name', 'level', 'score', 'station', 'ship_num', 'label',];
 
 }
