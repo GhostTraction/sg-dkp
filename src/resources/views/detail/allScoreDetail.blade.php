@@ -3,7 +3,8 @@
     <tr>
         <th>角色名</th>
         <th>获取DKP</th>
-        <th>花费DKP</th>
+        <th>获取原因</th>
+        <th>获取时间</th>
     </tr>
     </thead>
     <tbody>
@@ -16,6 +17,7 @@
                 {{$dkp->score}}
             </td>
             <td>{{$dkp->remark}}</td>
+            <td>{{$dkp->created_at}}</td>
         </tr>
     @endforeach
     </tbody>

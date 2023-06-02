@@ -11,6 +11,44 @@ use Dkp\Seat\SeatDKP\Validation\AddSupplement;
 use Dkp\Seat\SeatDKP\Validation\Commodity;
 use Seat\Web\Models\User;
 
+function sendPostRequest($interface,$getParameter,$data) {
+    $url = 'http://127.0.0.1:8000/' . $interface . "?" . $getParameter; // 替换为实际的目标地址
+
+    // 将数据转换为 JSON
+    $jsonData = json_encode($data);
+
+    // 设置请求头
+    $headers = array(
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($jsonData)
+    );
+
+    // 初始化 cURL
+    $ch = curl_init();
+
+    // 设置 cURL 选项
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    // 执行请求并获取响应
+    $response = curl_exec($ch);
+
+    // 检查是否有错误发生
+    if(curl_errno($ch)) {
+        $error = curl_error($ch);
+        echo "cURL Error: " . $error;
+    }
+
+    // 关闭 cURL 资源
+    curl_close($ch);
+
+    // 返回响应结果
+    return $response;
+}
+
 class DkpController extends Controller
 {
     /**
@@ -116,9 +154,11 @@ class DkpController extends Controller
      */
     public function allScoreDetail($userId)
     {
-        $userScoreDetail = DkpInfo::join('character_infos', 'character_infos.character_id', '=', 'dkp_info.character_id')
-            ->where('dkp_info.user_id', '=', $userId)
-            ->where('dkp_info.status', '=', '1')
+        $userScoreDetail = DkpInfo::join('character_infos', 'character_infos.character_id', '=', 'dkp_info.character_id')	
+	    ->where('dkp_info.user_id', '=', $userId)
+	    ->where('dkp_info.status', '=', '1')
+            ->orderBy('dkp_info.created_at', 'desc')
+            ->select('dkp_info.*','character_infos.name')
             ->get();
         return view('dkp::detail.allScoreDetail')->with('userScoreDetail', json_encode($userScoreDetail, JSON_UNESCAPED_UNICODE));
     }
@@ -131,9 +171,11 @@ class DkpController extends Controller
      */
     public function useScoreDetail($userId)
     {
-        $userScoreDetail = DkpInfo::join('character_infos', 'character_infos.character_id', '=', 'dkp_info.character_id')
-            ->where('dkp_info.user_id', '=', $userId)
-            ->where('dkp_info.status', '=', '3')
+        $userScoreDetail = DkpInfo::join('character_infos', 'character_infos.character_id', '=', 'dkp_info.character_id')	
+	    ->where('dkp_info.user_id', '=', $userId)
+	    ->where('dkp_info.status', '=', '3')
+            ->orderBy('dkp_info.created_at', 'desc')
+            ->select('dkp_info.*','character_infos.name')
             ->get();
         return view('dkp::detail.allScoreDetail')->with('userScoreDetail', json_encode($userScoreDetail, JSON_UNESCAPED_UNICODE));
     }
@@ -445,15 +487,17 @@ class DkpController extends Controller
         }
 
         $Users = User::find($userId);
-
-        DkpInfo::create([
+        $dkpInfo = DkpInfo::create([
             'user_id' => $userId,
             'character_id' => $Users->main_character_id,
             'score' => $DkpSupplement->use_dkp,
             'status' => 2,
             'remark' => $DkpSupplement->supplement_name,
             'supplement_id' => $supplementId,
-        ])->save();
+        ]);
+		$dkpInfo->save();
+		sendPostRequest("api/SendGroupMessage", "module=dkp&event=Create",$dkpInfo);
+		
 
 
         return redirect()->back()
@@ -491,7 +535,7 @@ class DkpController extends Controller
     public function approve()
     {
         $dkpList = DkpInfo::join('character_infos', 'character_infos.character_id', '=', 'dkp_info.character_id')
-            ->where('dkp_info.user_id', '=', auth()->user()->id)
+            //->where('dkp_info.user_id', '=', auth()->user()->id)
             ->where(function ($query) {
                 $query->where('dkp_info.approved', '=', 1)
                     ->orwhere('dkp_info.approved', '=', 0);
@@ -501,7 +545,7 @@ class DkpController extends Controller
             ->get();
 
         $dkpList2 = DkpInfo::join('character_infos', 'character_infos.character_id', '=', 'dkp_info.character_id')
-            ->where('dkp_info.user_id', '=', auth()->user()->id)
+            //->where('dkp_info.user_id', '=', auth()->user()->id)
             ->where(function ($query) {
                 $query->where('dkp_info.approved', '=', -1)
                     ->orwhere('dkp_info.approved', '=', 2);
@@ -521,7 +565,8 @@ class DkpController extends Controller
     public function dkpApprove($kill_id, $action)
     {
         $dkpInfo = DkpInfo::find($kill_id);
-
+		$request_action = str_replace(' ', '_', $action);
+		sendPostRequest("api/SendGroupMessage", "module=dkp&event=".$request_action,$dkpInfo);
         switch ($action) {
             case 'Approve':
                 //批准
@@ -536,8 +581,10 @@ class DkpController extends Controller
                 $dkpSupplement->save();
                 break;
             case 'Paid Out':
+				//支付
                 $dkpInfo->approved = '2';
                 $dkpInfo->status = '3';
+				//echo $dkpInfo;
                 break;
             case 'Pending':
                 $dkpInfo->approved = '0';
